@@ -1,0 +1,129 @@
+[
+    {
+      "product_name": "12 months LinkedIn Premium Business",
+      "discount": "-30%",
+      "price": "$42.00 – $130.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-02_46_38-PM-600x600.png",
+      "description": "LinkedIn Business Premium plan. Includes 16,000+ Courses with Certificate, Top Applicant Job Recommendations, Company Insights, Salary Insights, Unlimited/Private Browsing, and 15 Inmail Credits per month. Activation via Gift Link or temporary Logins.",
+      "variations": [
+        { "option": "03 Month", "price": "$42.00" },
+        { "option": "06 Month", "price": "$75.00" },
+        { "option": "12 Month", "price": "$130.00" }
+      ]
+    },
+    {
+      "product_name": "Adobe Creative Cloud",
+      "discount": "-70%",
+      "price": "$15.00 – $130.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-03_02_54-PM-600x600.png",
+      "description": "Full access to Adobe Creative Cloud apps including Photoshop, Illustrator, Premiere Pro, and Acrobat Pro. Available for individual apps or the full suite across various durations.",
+      "variations": [
+        { "option": "Duration-based variants", "price_range": "$15.00 - $130.00" }
+      ]
+    },
+    {
+      "product_name": "Canva Pro - 01 year",
+      "discount": "-71%",
+      "price": "$29.00",
+      "original_price": "$100.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/Gemini_Generated_Image_yrcaryyrcaryyrca-600x600.png",
+      "description": "One-year subscription to Canva Pro. Unlock premium templates, stock photos, brand kits, and AI-powered design tools.",
+      "variations": []
+    },
+    {
+      "product_name": "Coursera Plus 1Year",
+      "discount": "-74%",
+      "price": "$21.00",
+      "original_price": "$80.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-03_09_39-PM-600x600.png",
+      "description": "Unlimited access to 7,000+ courses, professional certificates, and guided projects from top universities for one year.",
+      "variations": []
+    },
+    {
+      "product_name": "Edx yearly Subscription",
+      "discount": "-90%",
+      "price": "$19.00",
+      "original_price": "$199.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-04_20_28-PM-e1763637662885-600x600.png",
+      "description": "Full year access to Edx premium courses and certifications from global educational institutions.",
+      "variations": []
+    },
+    {
+      "product_name": "Gamma Pro – 1 year",
+      "discount": "-54%",
+      "price": "$69.00",
+      "original_price": "$150.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-04_25_56-PM-600x600.png",
+      "description": "Pro plan for Gamma AI. Includes advanced features for AI-powered creation of presentations, documents, and web pages.",
+      "variations": []
+    },
+    {
+      "product_name": "Google Veo 3",
+      "discount": "-50%",
+      "price": "$40.00 – $75.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-10_53_38-PM-e1763662238689-600x600.png",
+      "description": "Premium access to Google's video generation tools for high-quality content creation.",
+      "variations": [
+        { "option": "Subscription Tiers", "price_range": "$40.00 - $75.00" }
+      ]
+    },
+    {
+      "product_name": "Grammary Pro - 1 year",
+      "discount": "-55%",
+      "price": "$45.00",
+      "original_price": "$100.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-03_15_57-PM-e1763637073173-600x600.png",
+      "description": "Premium grammar and writing assistant. Includes tone detection, clarity suggestions, and plagiarism checking for one year.",
+      "variations": []
+    },
+    {
+      "product_name": "Linkedin Career Premium",
+      "discount": "-42%",
+      "price": "$35.00 – $110.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-02_50_00-PM-600x600.png",
+      "description": "Subscription for job seekers. Features include Featured Applicant status, Applicant Insights, and seeing who viewed your profile.",
+      "variations": [
+        { "option": "03 Month", "price": "$35.00" },
+        { "option": "06 Month", "price": "$65.00" },
+        { "option": "12 Month", "price": "$110.00" }
+      ]
+    },
+    {
+      "product_name": "Linkedin Recruiter Lite",
+      "discount": "-40%",
+      "price": "$60.00 – $450.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-03_04_18-PM-600x600.png",
+      "description": "Professional hiring tool. Provides advanced candidate search, smart suggestions, and candidate pipeline management.",
+      "variations": [
+        { "option": "Duration-based variants", "price_range": "$60.00 - $450.00" }
+      ]
+    },
+    {
+      "product_name": "Linkedin Sales Navigator Core",
+      "discount": "-40%",
+      "price": "$60.00 – $425.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-02_56_06-PM-e1763637148594-600x600.png",
+      "description": "Premium sales tool to target buyers, track lead changes, and engage via InMail. Ideal for high-level networking.",
+      "variations": [
+        { "option": "Duration-based variants", "price_range": "$60.00 - $425.00" }
+      ]
+    },
+    {
+      "product_name": "Microsoft Office 365 – lifetime",
+      "discount": "-44%",
+      "price": "$28.00",
+      "original_price": "$50.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-04_15_29-PM-600x600.png",
+      "description": "Lifetime access to the full Microsoft Office suite (Word, Excel, PowerPoint) and cloud storage.",
+      "variations": []
+    },
+    {
+      "product_name": "Perplexity Ai Pro plan- 1 year",
+      "discount": "-66%",
+      "price": "$34.00",
+      "original_price": "$100.00",
+      "image": "https://absubscriptions.com/wp-content/uploads/2025/11/ChatGPT-Image-Nov-20-2025-04_02_33-PM-e1763636917407-600x600.png",
+      "description": "Pro subscription for Perplexity AI. Offers advanced search models, unlimited file uploads, and Claude/GPT-4 access for one year.",
+      "variations": []
+    }
+  ]
