@@ -1,65 +1,336 @@
 import Image from "next/image";
+import products from "@/data/proiducts.json";
+import MobileNav from "@/components/MobileNav";
+import FeedbackCarousel from "@/components/FeedbackCarousel";
+import { ThemeToggle } from "@/components/ThemeToggle";
+
+const paymentMethods = [
+  { name: "JazzCash", icon: "💳" },
+  { name: "Easypaisa", icon: "📱" },
+  { name: "Bank Account", icon: "🏦" },
+  { name: "Binance", icon: "🪙" },
+  { name: "OKX", icon: "🔶" },
+  { name: "PayPal", icon: "💰" },
+  { name: "Other Crypto", icon: "₿" },
+  { name: "Cards", icon: "💳" },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="grain-overlay relative">
+      {/* ===== DESKTOP HEADER ===== */}
+      <header className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-border">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+          <a href="#hero" className="text-xl font-bold font-heading tracking-wide">
+            <span className="gold-shimmer">PrimeToolsProvider</span>
+          </a>
+          <nav className="flex items-center gap-8">
+            {[
+              { href: "#products", label: "Products" },
+              { href: "#feedback", label: "Reviews" },
+              { href: "#payment", label: "Payment" },
+              { href: "#contact", label: "Contact" },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-muted hover:text-accent transition-colors duration-200 font-body"
+              >
+                {link.label}
+              </a>
+            ))}
+            <ThemeToggle />
+            <a
+              href="https://wa.me/923438782614"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glow-btn bg-accent hover:bg-accent-light text-foreground px-5 py-2 rounded-full text-sm font-medium transition-all dark:text-background"
+            >
+              Order Now
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* ===== HERO SECTION ===== */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
+        {/* Background elements */}
+        <div className="absolute inset-0 dots-pattern" />
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/3 rounded-full blur-3xl" />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          {/* Badge */}
+          <div className="animate-fade-in-up opacity-0 inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+            <span className="text-xs text-accent font-body">Trusted by 1000+ Customers</span>
+          </div>
+
+          {/* Heading */}
+          <h1 className="animate-fade-in-up opacity-0 delay-100 text-4xl sm:text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-6">
+            Premium Digital Tools
+            <br />
+            <span className="gold-shimmer">At Unbeatable Prices</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="animate-fade-in-up opacity-0 delay-200 text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto mb-10 font-body leading-relaxed">
+            Get genuine subscriptions for LinkedIn Premium, Adobe CC, Canva Pro, and more &mdash; save up to 90% on premium software.
           </p>
+
+          {/* CTA Buttons */}
+          <div className="animate-fade-in-up opacity-0 delay-300 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://wa.me/923438782614"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glow-btn inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-foreground font-semibold px-8 py-3.5 rounded-full text-sm transition-all dark:text-background"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Order via WhatsApp
+            </a>
+            <a
+              href="#products"
+              className="inline-flex items-center justify-center gap-2 border-2 border-border bg-background text-foreground px-8 py-3.5 rounded-full text-sm font-medium hover:border-accent hover:text-accent transition-all dark:bg-surface-light"
+            >
+              Browse Products
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </a>
+          </div>
+
+          {/* Stats */}
+          <div className="animate-fade-in-up opacity-0 delay-500 mt-16 grid grid-cols-3 gap-4 max-w-lg mx-auto">
+            {[
+              { value: "1000+", label: "Happy Clients" },
+              { value: "90%", label: "Savings" },
+              { value: "24/7", label: "Support" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-accent font-heading">{stat.value}</div>
+                <div className="text-xs text-muted mt-1 font-body">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-39.5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/8 px-5 transition-colors hover:border-transparent hover:bg-black/4 dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-39.5"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 animate-bounce">
+          <span className="text-xs text-muted">Scroll</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ===== PRODUCTS SECTION ===== */}
+      <section id="products" className="relative py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-14">
+            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Our Collection</span>
+            <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+              Premium <span className="gold-shimmer">Subscriptions</span>
+            </h2>
+            <p className="text-muted max-w-xl mx-auto font-body">
+              Genuine premium subscriptions at unbeatable prices. All products come with full activation support.
+            </p>
+          </div>
+
+          {/* Product Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {products.map((product, i) => (
+              <div
+                key={i}
+                className="product-card group bg-surface-light border border-border rounded-2xl overflow-hidden"
+              >
+                {/* Image */}
+                <div className="relative aspect-square bg-surface overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.product_name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  {/* Discount badge */}
+                  {product.discount && (
+                    <div className="absolute top-3 left-3 bg-accent text-background text-xs font-bold px-2.5 py-1 rounded-full">
+                      {product.discount}
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="p-4">
+                  <h3 className="font-heading font-semibold text-sm leading-tight mb-2 group-hover:text-accent transition-colors line-clamp-2">
+                    {product.product_name}
+                  </h3>
+                  <p className="text-muted text-xs font-body leading-relaxed mb-3 line-clamp-2">
+                    {product.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-accent font-bold text-lg font-heading">{product.price}</span>
+                      {product.original_price && (
+                        <span className="text-muted text-xs line-through ml-2">{product.original_price}</span>
+                      )}
+                    </div>
+                  </div>
+                  {/* Variations */}
+                  {product.variations && product.variations.length > 0 && product.variations[0].option !== "Duration-based variants" && product.variations[0].option !== "Subscription Tiers" && (
+                    <div className="mt-3 pt-3 border-t border-border">
+                      <div className="flex flex-wrap gap-1.5">
+                        {product.variations.map((v, vi) => (
+                          <span key={vi} className="text-[10px] bg-surface-lighter text-muted px-2 py-1 rounded-md font-body">
+                            {v.option}: <span className="text-accent">{v.price}</span>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {/* Order button */}
+                  <a
+                    href={`https://wa.me/923438782614?text=${encodeURIComponent(`Hi, I'm interested in: ${product.product_name}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="glow-btn mt-4 w-full flex items-center justify-center gap-2 bg-accent/10 text-accent border border-accent/20 py-2.5 rounded-xl text-xs font-medium hover:bg-accent/20 transition-all"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    Order Now
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FEEDBACK SECTION ===== */}
+      <section id="feedback" className="relative py-20 md:py-28 bg-surface-light/50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Testimonials</span>
+            <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+              What Our <span className="gold-shimmer">Clients Say</span>
+            </h2>
+            <p className="text-muted max-w-xl mx-auto font-body">
+              Real screenshots from real customers. See why thousands trust PrimeToolsProvider for their premium subscriptions.
+            </p>
+          </div>
+
+          <FeedbackCarousel />
+        </div>
+      </section>
+
+      {/* ===== PAYMENT METHODS SECTION ===== */}
+      <section id="payment" className="relative py-20 md:py-28">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Easy Checkout</span>
+            <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+              Payment <span className="gold-shimmer">Methods</span>
+            </h2>
+            <p className="text-muted max-w-xl mx-auto font-body">
+              We accept a wide range of payment methods to make your purchase as convenient as possible.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {paymentMethods.map((method) => (
+              <div
+                key={method.name}
+                className="group bg-surface-light border border-border rounded-2xl p-5 text-center hover:border-accent/30 transition-all duration-300 hover:bg-surface-lighter"
+              >
+                <div className="text-3xl mb-3">{method.icon}</div>
+                <span className="text-sm font-body text-foreground group-hover:text-accent transition-colors">
+                  {method.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== CONTACT SECTION ===== */}
+      <section id="contact" className="relative py-20 md:py-28 bg-surface-light/50">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Get In Touch</span>
+            <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+              Contact <span className="gold-shimmer">Us</span>
+            </h2>
+            <p className="text-muted max-w-xl mx-auto font-body">
+              Have questions? Reach out to us anytime. We&apos;re here to help you find the best deal.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* WhatsApp Card */}
+            <a
+              href="https://wa.me/923438782614"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-surface-light border border-border rounded-2xl p-8 hover:border-accent/30 transition-all duration-300 flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#22c55e">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+              </div>
+              <h3 className="font-heading font-semibold text-lg mb-1">WhatsApp</h3>
+              <p className="text-muted font-body text-sm">+92 343 8782614</p>
+              <span className="mt-4 text-xs text-accent font-body">Tap to chat &rarr;</span>
+            </a>
+
+            {/* Email Card */}
+            <a
+              href="mailto:providerprimetools@gmail.com"
+              className="group bg-surface-light border border-border rounded-2xl p-8 hover:border-accent/30 transition-all duration-300 flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M22 7l-10 7L2 7" />
+                </svg>
+              </div>
+              <h3 className="font-heading font-semibold text-lg mb-1">Email</h3>
+              <p className="text-muted font-body text-sm">providerprimetools@gmail.com</p>
+              <span className="mt-4 text-xs text-accent font-body">Send email &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FOOTER ===== */}
+      <footer className="border-t border-border py-10 pb-24 md:pb-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left">
+              <span className="font-heading font-bold text-lg gold-shimmer">PrimeToolsProvider</span>
+              <p className="text-muted text-xs font-body mt-1">Premium digital subscriptions at unbeatable prices.</p>
+            </div>
+            <div className="flex items-center gap-6">
+              <a href="#products" className="text-xs text-muted hover:text-accent transition-colors font-body">Products</a>
+              <a href="#feedback" className="text-xs text-muted hover:text-accent transition-colors font-body">Reviews</a>
+              <a href="#payment" className="text-xs text-muted hover:text-accent transition-colors font-body">Payment</a>
+              <a href="#contact" className="text-xs text-muted hover:text-accent transition-colors font-body">Contact</a>
+            </div>
+          </div>
+          <div className="mt-6 pt-6 border-t border-border text-center">
+            <p className="text-xs text-muted font-body">
+              &copy; {new Date().getFullYear()} PrimeToolsProvider. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileNav />
+    </main>
   );
 }
