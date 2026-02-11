@@ -386,7 +386,7 @@ export default function FeedbackCarousel() {
             <li
               key={i}
               role="listitem"
-              className="flex-shrink-0 snap-center"
+              className="shrink-0 snap-center"
             >
               <button
                 onClick={() => setSelectedImage(url)}
@@ -394,7 +394,7 @@ export default function FeedbackCarousel() {
                 aria-current={i === currentIndex ? "true" : undefined}
                 className="group cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50 rounded-2xl"
               >
-                <div className="relative w-[200px] h-[360px] md:w-[220px] md:h-[400px] rounded-2xl overflow-hidden border border-border bg-surface-light transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] group-focus:border-accent/60">
+                <div className="relative w-50 h-90 md:w-55 md:h-100 rounded-2xl overflow-hidden border border-border bg-surface-light transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] group-focus:border-accent/60">
                   <Image
                     src={url}
                     alt={`Client feedback screenshot ${i + 1}`}
@@ -439,7 +439,7 @@ export default function FeedbackCarousel() {
       {/* Lightbox Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
           onClick={() => setSelectedImage(null)}
           onKeyDown={handleLightboxKeyDown}
           role="dialog"
@@ -470,7 +470,7 @@ export default function FeedbackCarousel() {
           </button>
 
           <div 
-            className="relative w-full max-w-[360px] h-[80vh] rounded-2xl overflow-hidden"
+            className="relative w-full max-w-90 h-[80vh] rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
