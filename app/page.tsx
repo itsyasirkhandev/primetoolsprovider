@@ -1,3 +1,13 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | PrimeToolsProvider - Premium Digital Subscriptions",
+  description: "Premium digital subscriptions at unbeatable prices. Get genuine software subscriptions for LinkedIn Premium, Adobe Creative Cloud, Canva Pro, and more with 90% off.",
+  alternates: {
+    canonical: "https://primetoolsprovider.vercel.app/",
+  },
+};
+
 import Image from "next/image";
 import products from "@/data/proiducts.json";
 import MobileNav from "@/components/MobileNav";

@@ -1,0 +1,41 @@
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas if any
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow all bots to access the sitemap
+Sitemap: https://primetoolsprovider.vercel.app/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow specific bot types if needed
+# User-agent: AhrefsBot
+# Disallow: /
+
+# User-agent: MJ12bot
+# Disallow: /
+
+# Allow Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Allow Bingbot
+User-agent: Bingbot
+Allow: /
+
+# Allow Facebook External Hit (for link previews)
+User-agent: facebookexternalhit
+Allow: /
+
+# Allow Twitterbot (for link previews)
+User-agent: Twitterbot
+Allow: /
+
+# Allow LinkedInbot (for link previews)
+User-agent: LinkedInBot
+Allow: /
