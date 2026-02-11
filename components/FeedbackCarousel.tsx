@@ -26,10 +26,14 @@ export default function FeedbackCarousel() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Drag-to-scroll state
+  // Smooth drag-to-scroll state with momentum
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [velocity, setVelocity] = useState(0);
+  const [lastX, setLastX] = useState(0);
+  const animationRef = useRef<number | null>(null);
+  const lastTimestampRef = useRef<number>(0);
 
   // Check scroll position to show/hide navigation buttons
   const checkScroll = useCallback(() => {
@@ -42,7 +46,8 @@ export default function FeedbackCarousel() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    el.addEventListener("scroll", checkScroll, { passive: true });
+    // Remove passive: true to prevent the warning
+    el.addEventListener("scroll", checkScroll);
     checkScroll();
     return () => el.removeEventListener("scroll", checkScroll);
   }, [checkScroll]);
@@ -55,75 +60,192 @@ export default function FeedbackCarousel() {
     el.scrollBy({ left: amount, behavior: "smooth" });
   };
 
-  // Mouse wheel scroll support
+  // Improved mouse wheel scroll - prevent page scroll when hovering over carousel
   const handleWheel = useCallback((e: React.WheelEvent) => {
     const el = scrollRef.current;
     if (!el) return;
     
-    // Only handle horizontal scroll when mouse is over the carousel
-    // Prevent vertical scrolling when horizontal scrolling is possible
-    if (e.deltaY !== 0) {
+    const deltaX = e.deltaX;
+    const deltaY = e.deltaY;
+    const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
+    
+    // Check if carousel can scroll in the direction of the wheel
+    const canScrollLeftVal = el.scrollLeft > 0;
+    const canScrollRightVal = el.scrollLeft < el.scrollWidth - el.clientWidth;
+    const canScroll = (delta > 0 && canScrollRightVal) || (delta < 0 && canScrollLeftVal);
+    
+    // Only prevent default if we can actually scroll the carousel
+    if (canScroll) {
       e.preventDefault();
-      el.scrollBy({ left: e.deltaY, behavior: "smooth" });
-    } else if (e.deltaX !== 0) {
-      e.preventDefault();
-      el.scrollBy({ left: e.deltaX, behavior: "smooth" });
+      // Use direct scroll for instant feedback
+      el.scrollBy({ left: delta, behavior: "auto" });
     }
   }, []);
 
-  // Drag-to-scroll handlers
+  // Smooth momentum animation - use ref-based pattern to avoid hoisting issues
+  const animateMomentumRef = useRef<(() => void) | null>(null);
+
+  const animateMomentum = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Apply friction to slow down the momentum
+    const friction = 0.95;
+    const newVelocity = velocity * friction;
+
+    if (Math.abs(newVelocity) < 0.1) {
+      setVelocity(0);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+      return;
+    }
+
+    setVelocity(newVelocity);
+    el.scrollLeft -= newVelocity;
+
+    animationRef.current = requestAnimationFrame(animateMomentumRef.current!);
+  }, [velocity]);
+
+  // Update the ref whenever the callback changes
+  useEffect(() => {
+    animateMomentumRef.current = animateMomentum;
+  }, [animateMomentum]);
+
+  // Start drag
   const handleMouseDown = (e: React.MouseEvent) => {
     const el = scrollRef.current;
     if (!el) return;
+    
+    // Cancel any ongoing momentum animation
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    setVelocity(0);
+    
     setIsDragging(true);
     setStartX(e.pageX - el.offsetLeft);
     setScrollLeft(el.scrollLeft);
+    setLastX(e.pageX);
+    lastTimestampRef.current = performance.now();
+    
     el.style.cursor = "grabbing";
     el.style.userSelect = "none";
+    el.style.overscrollBehavior = "x contain";
   };
 
+  // During drag - smooth movement with velocity tracking
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
-    e.preventDefault();
+    
     const el = scrollRef.current;
     if (!el) return;
-    const x = e.pageX - el.offsetLeft;
-    const walk = (x - startX) * 1.5; // Adjust multiplier for faster/slower drag
-    el.scrollLeft = scrollLeft - walk;
+    
+    e.preventDefault();
+    
+    const x = e.pageX;
+    const walk = x - lastX;
+    
+    // Calculate velocity based on mouse movement speed
+    const now = performance.now();
+    const delta = now - lastTimestampRef.current;
+    if (delta > 0) {
+      setVelocity(walk);
+      lastTimestampRef.current = now;
+    }
+    
+    // Direct scroll for instant feedback
+    el.scrollLeft = scrollLeft - (x - startX);
+    setLastX(x);
   };
 
+  // End drag - start momentum
   const handleMouseUp = () => {
+    if (!isDragging) return;
+    
     setIsDragging(false);
+    
     const el = scrollRef.current;
     if (el) {
       el.style.cursor = "grab";
       el.style.userSelect = "";
+      el.style.overscrollBehavior = "";
+    }
+    
+    // Start momentum if there was enough velocity
+    if (Math.abs(velocity) > 1) {
+      animationRef.current = requestAnimationFrame(animateMomentum);
+    } else {
+      setVelocity(0);
     }
   };
 
   const handleMouseLeave = () => {
-    setIsDragging(false);
-    const el = scrollRef.current;
-    if (el) {
-      el.style.cursor = "grab";
-      el.style.userSelect = "";
+    if (isDragging) {
+      handleMouseUp();
     }
   };
 
-  // Touch swipe support
-  const [touchStart, setTouchStart] = useState(0);
+  // Touch swipe support with momentum
+  const [touchVelocity, setTouchVelocity] = useState(0);
+  const touchAnimationRef = useRef<number | null>(null);
+  const lastTouchRef = useRef(0);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
+    lastTouchRef.current = e.touches[0].clientX;
+    
+    // Cancel any ongoing touch momentum
+    if (touchAnimationRef.current) {
+      cancelAnimationFrame(touchAnimationRef.current);
+      touchAnimationRef.current = null;
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     const el = scrollRef.current;
     if (!el) return;
+    
     const touchEnd = e.touches[0].clientX;
-    const diff = touchStart - touchEnd;
+    const diff = lastTouchRef.current - touchEnd;
+    
+    // Calculate velocity
+    setTouchVelocity(diff);
+    lastTouchRef.current = touchEnd;
+    
     el.scrollLeft += diff;
-    setTouchStart(touchEnd);
+  };
+
+  const handleTouchEnd = () => {
+    // Apply momentum after touch ends
+    if (Math.abs(touchVelocity) > 2) {
+      const animateTouchMomentum = () => {
+        const el = scrollRef.current;
+        if (!el) return;
+        
+        const friction = 0.92;
+        const newVelocity = touchVelocity * friction;
+        
+        if (Math.abs(newVelocity) < 0.1) {
+          setTouchVelocity(0);
+          if (touchAnimationRef.current) {
+            cancelAnimationFrame(touchAnimationRef.current);
+            touchAnimationRef.current = null;
+          }
+          return;
+        }
+        
+        setTouchVelocity(newVelocity);
+        el.scrollLeft += newVelocity;
+        
+        touchAnimationRef.current = requestAnimationFrame(animateTouchMomentum);
+      };
+      
+      touchAnimationRef.current = requestAnimationFrame(animateTouchMomentum);
+    } else {
+      setTouchVelocity(0);
+    }
   };
 
   // Keyboard navigation
@@ -197,6 +319,18 @@ export default function FeedbackCarousel() {
     }
   };
 
+  // Cleanup animations on unmount
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      if (touchAnimationRef.current) {
+        cancelAnimationFrame(touchAnimationRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
       <div 
@@ -240,6 +374,7 @@ export default function FeedbackCarousel() {
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           onKeyDown={handleKeyDown}
           onScroll={handleScroll}
           role="list"

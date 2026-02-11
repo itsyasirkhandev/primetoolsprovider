@@ -222,7 +222,7 @@ export default function Home() {
                   />
                   {/* Discount badge */}
                   {product.discount && (
-                    <div className="absolute top-3 left-3 bg-accent text-background text-xs font-bold px-2.5 py-1 rounded-full">
+                    <div className="absolute top-3 left-3 bg-accent-badge text-background text-xs font-bold px-2.5 py-1 rounded-full">
                       {product.discount}
                     </div>
                   )}
