@@ -39,8 +39,12 @@ export default function FeedbackCarousel() {
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+    const scrollLeft = el.scrollLeft;
+    const scrollWidth = el.scrollWidth;
+    const clientWidth = el.clientWidth;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    return { scrollLeft, scrollWidth, clientWidth };
   }, []);
 
   useEffect(() => {
@@ -48,7 +52,7 @@ export default function FeedbackCarousel() {
     if (!el) return;
     // Remove passive: true to prevent the warning
     el.addEventListener("scroll", checkScroll);
-    checkScroll();
+    requestAnimationFrame(() => checkScroll());
     return () => el.removeEventListener("scroll", checkScroll);
   }, [checkScroll]);
 
@@ -281,14 +285,16 @@ export default function FeedbackCarousel() {
 
   // Update current index based on scroll position
   const handleScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    checkScroll();
-    
-    // Calculate which item is most visible
-    const itemWidth = 220 + 16; // width + gap
-    const newIndex = Math.round(el.scrollLeft / itemWidth);
-    setCurrentIndex(Math.max(0, Math.min(newIndex, feedbackScreenshots.length - 1)));
+    requestAnimationFrame(() => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const { scrollLeft } = checkScroll();
+
+      // Calculate which item is most visible
+      const itemWidth = 220 + 16; // width + gap
+      const newIndex = Math.round(scrollLeft / itemWidth);
+      setCurrentIndex(Math.max(0, Math.min(newIndex, feedbackScreenshots.length - 1)));
+    });
   }, [checkScroll]);
 
   // Navigate to specific slide
