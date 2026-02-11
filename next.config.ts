@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
         hostname: "i.postimg.cc",
       },
     ],
+    qualities: [60, 75],
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
