@@ -60,27 +60,33 @@ export default function FeedbackCarousel() {
     el.scrollBy({ left: amount, behavior: "smooth" });
   };
 
-  // Improved mouse wheel scroll - prevent page scroll when hovering over carousel
-  const handleWheel = useCallback((e: React.WheelEvent) => {
+  // Improved mouse wheel scroll - always prevent page scroll when hovering over carousel
+  const handleWheel = useCallback((e: WheelEvent) => {
     const el = scrollRef.current;
     if (!el) return;
-    
+
     const deltaX = e.deltaX;
     const deltaY = e.deltaY;
     const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
-    
-    // Check if carousel can scroll in the direction of the wheel
-    const canScrollLeftVal = el.scrollLeft > 0;
-    const canScrollRightVal = el.scrollLeft < el.scrollWidth - el.clientWidth;
-    const canScroll = (delta > 0 && canScrollRightVal) || (delta < 0 && canScrollLeftVal);
-    
-    // Only prevent default if we can actually scroll the carousel
-    if (canScroll) {
-      e.preventDefault();
-      // Use direct scroll for instant feedback
-      el.scrollBy({ left: delta, behavior: "auto" });
-    }
+
+    // Always prevent default so the page doesn't scroll
+    e.preventDefault();
+
+    // Scroll the carousel if possible, otherwise do nothing
+    el.scrollBy({ left: delta, behavior: "auto" });
   }, []);
+
+  // Add native wheel event listener with passive: false to properly prevent page scroll
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+    };
+  }, [handleWheel]);
 
   // Smooth momentum animation - use ref-based pattern to avoid hoisting issues
   const animateMomentumRef = useRef<(() => void) | null>(null);
@@ -367,7 +373,6 @@ export default function FeedbackCarousel() {
         <ul
           ref={scrollRef}
           className="scroll-container flex gap-4 overflow-x-auto px-1 py-4 snap-x snap-mandatory list-none m-0 cursor-grab active:cursor-grabbing"
-          onWheel={handleWheel}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
