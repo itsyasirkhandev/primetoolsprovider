@@ -288,11 +288,12 @@ export default function FeedbackCarousel() {
     requestAnimationFrame(() => {
       const el = scrollRef.current;
       if (!el) return;
-      const { scrollLeft } = checkScroll();
+      const scrollData = checkScroll();
+      if (!scrollData) return;
 
       // Calculate which item is most visible
       const itemWidth = 220 + 16; // width + gap
-      const newIndex = Math.round(scrollLeft / itemWidth);
+      const newIndex = Math.round(scrollData.scrollLeft / itemWidth);
       setCurrentIndex(Math.max(0, Math.min(newIndex, feedbackScreenshots.length - 1)));
     });
   }, [checkScroll]);
