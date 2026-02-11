@@ -65,7 +65,7 @@ export default function MobileNav() {
           }
         });
       },
-      { threshold: 0.3, rootMargin: "-80px 0px -40% 0px" }
+      { threshold: 0.15, rootMargin: "-80px 0px -50% 0px" }
     );
 
     navItems.forEach(({ id }) => {
@@ -77,6 +77,7 @@ export default function MobileNav() {
   }, []);
 
   const scrollTo = (id: string) => {
+    setActiveSection(id);
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
