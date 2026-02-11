@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "Get premium software subscriptions like LinkedIn Premium, Adobe Creative Cloud, Canva Pro, and more at up to 90% off. Trusted by thousands of customers worldwide.",
   keywords: [
     "premium software subscriptions",
-    "LinkedIn Premium",
+    "LinkedIn Premium buy prime tools provider",
     "Adobe Creative Cloud",
     "Canva Pro",
     "digital subscriptions",
@@ -33,8 +33,7 @@ export const metadata: Metadata = {
     "Canva Pro cheap",
     "LinkedIn Premium discount",
     "software subscription Pakistan",
-    "JazzCash software",
-    "Easypaisa software"
+    "subscription buy prime tools provider"
   ],
   authors: [{ name: "PrimeToolsProvider" }],
   creator: "PrimeToolsProvider",
@@ -77,7 +76,7 @@ export const metadata: Metadata = {
     creator: "@PrimeToolsPK",
   },
   verification: {
-    google: "your-google-verification-code",
+    google: "kQ7PZlZ7QCByXW6mAYsITxSn41HcHYlZroeTF-neGcY",
     yandex: "your-yandex-verification-code",
   },
   category: "Software & Technology",
@@ -99,7 +98,7 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://primetoolsprovider.vercel.app/#organization",
+      "@id": "https://primetoolsprovider.vercel.app/",
       "name": "PrimeToolsProvider",
       "url": "https://primetoolsprovider.vercel.app",
       "logo": {
