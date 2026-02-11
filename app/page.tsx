@@ -191,7 +191,7 @@ export default function Home() {
       </section>
 
       {/* ===== PRODUCTS SECTION ===== */}
-      <section id="products" className="relative py-16 sm:py-20 md:py-28">
+      <section id="products" className="relative py-16 sm:py-20 md:py-28 min-h-[60vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Section Header */}
           <div className="text-center mb-10 sm:mb-14">
@@ -275,7 +275,7 @@ export default function Home() {
       </section>
 
       {/* ===== FEEDBACK SECTION ===== */}
-      <section id="feedback" className="relative py-16 sm:py-20 md:py-28 bg-surface-light/50">
+      <section id="feedback" className="relative py-16 sm:py-20 md:py-28 bg-surface-light/50 min-h-[60vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
             <span className="text-accent-text text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-body font-medium">Testimonials</span>
@@ -292,7 +292,7 @@ export default function Home() {
       </section>
 
       {/* ===== PAYMENT METHODS SECTION ===== */}
-      <section id="payment" className="relative py-16 sm:py-20 md:py-28">
+      <section id="payment" className="relative py-16 sm:py-20 md:py-28 min-h-[50vh]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-14">
             <span className="text-accent-text text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-body font-medium">Easy Checkout</span>
@@ -321,7 +321,7 @@ export default function Home() {
       </section>
 
       {/* ===== CONTACT SECTION ===== */}
-      <section id="contact" className="relative py-16 sm:py-20 md:py-28 bg-surface-light/50">
+      <section id="contact" className="relative py-16 sm:py-20 md:py-28 bg-surface-light/50 min-h-[50vh]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-14">
             <span className="text-accent-text text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-body font-medium">Get In Touch</span>
