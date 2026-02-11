@@ -406,6 +406,7 @@ export default function FeedbackCarousel() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="220px"
+                    quality={60}
                     draggable={false}
                   />
                 </div>
