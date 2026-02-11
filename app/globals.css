@@ -63,16 +63,16 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-lora), serif;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* Hide scrollbar for the page while maintaining scroll functionality */
+* {
+  /* Firefox */
+  scrollbar-width: none !important;
+  /* IE/Edge */
+  -ms-overflow-style: none !important;
 }
-::-webkit-scrollbar-track {
-  background: var(--surface);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent-dark);
-  border-radius: 3px;
+/* Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none !important;
 }
 
 /* Smooth scroll for anchor links */
