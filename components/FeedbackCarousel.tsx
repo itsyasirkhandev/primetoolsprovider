@@ -60,7 +60,22 @@ export default function FeedbackCarousel() {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const amount = dir === "left" ? -280 : 280;
+    
+    // Calculate scroll amount based on screen size
+    const screenWidth = window.innerWidth;
+    let scrollAmount: number;
+
+    if (screenWidth >= 1024) {
+      scrollAmount = 280;
+    } else if (screenWidth >= 768) {
+      scrollAmount = 220;
+    } else if (screenWidth >= 640) {
+      scrollAmount = 170;
+    } else {
+      scrollAmount = 130;
+    }
+
+    const amount = dir === "left" ? -scrollAmount : scrollAmount;
     el.scrollBy({ left: amount, behavior: "smooth" });
   };
 
@@ -202,15 +217,18 @@ export default function FeedbackCarousel() {
   const [touchVelocity, setTouchVelocity] = useState(0);
   const touchAnimationRef = useRef<number | null>(null);
   const lastTouchRef = useRef(0);
+  const touchStartRef = useRef(0);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     lastTouchRef.current = e.touches[0].clientX;
+    touchStartRef.current = e.touches[0].clientX;
     
     // Cancel any ongoing touch momentum
     if (touchAnimationRef.current) {
       cancelAnimationFrame(touchAnimationRef.current);
       touchAnimationRef.current = null;
     }
+    setTouchVelocity(0);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -220,21 +238,28 @@ export default function FeedbackCarousel() {
     const touchEnd = e.touches[0].clientX;
     const diff = lastTouchRef.current - touchEnd;
     
+    // Only prevent default if we're scrolling horizontally
+    const isHorizontalSwipe = Math.abs(touchStartRef.current - touchEnd) > 10;
+    if (isHorizontalSwipe && e.cancelable) {
+      e.preventDefault();
+    }
+    
     // Calculate velocity
     setTouchVelocity(diff);
     lastTouchRef.current = touchEnd;
     
+    // Direct scroll for instant feedback
     el.scrollLeft += diff;
   };
 
   const handleTouchEnd = () => {
     // Apply momentum after touch ends
-    if (Math.abs(touchVelocity) > 2) {
+    if (Math.abs(touchVelocity) > 1.5) {
       const animateTouchMomentum = () => {
         const el = scrollRef.current;
         if (!el) return;
         
-        const friction = 0.92;
+        const friction = 0.94;
         const newVelocity = touchVelocity * friction;
         
         if (Math.abs(newVelocity) < 0.1) {
@@ -291,9 +316,27 @@ export default function FeedbackCarousel() {
       const scrollData = checkScroll();
       if (!scrollData) return;
 
-      // Calculate which item is most visible
-      const itemWidth = 220 + 16; // width + gap
-      const newIndex = Math.round(scrollData.scrollLeft / itemWidth);
+      // Calculate which item is most visible based on screen width
+      const screenWidth = window.innerWidth;
+      let itemWidth: number;
+      let gap: number;
+
+      if (screenWidth >= 1024) {
+        itemWidth = 220;
+        gap = 16;
+      } else if (screenWidth >= 768) {
+        itemWidth = 180;
+        gap = 12;
+      } else if (screenWidth >= 640) {
+        itemWidth = 140;
+        gap = 12;
+      } else {
+        itemWidth = 110;
+        gap = 8;
+      }
+
+      const totalItemWidth = itemWidth + gap;
+      const newIndex = Math.round(scrollData.scrollLeft / totalItemWidth);
       setCurrentIndex(Math.max(0, Math.min(newIndex, feedbackScreenshots.length - 1)));
     });
   }, [checkScroll]);
@@ -302,8 +345,28 @@ export default function FeedbackCarousel() {
   const goToSlide = (index: number) => {
     const el = scrollRef.current;
     if (!el) return;
-    const itemWidth = 220 + 16;
-    el.scrollTo({ left: index * itemWidth, behavior: "smooth" });
+    
+    // Calculate item width based on screen size
+    const screenWidth = window.innerWidth;
+    let itemWidth: number;
+    let gap: number;
+
+    if (screenWidth >= 1024) {
+      itemWidth = 220;
+      gap = 16;
+    } else if (screenWidth >= 768) {
+      itemWidth = 180;
+      gap = 12;
+    } else if (screenWidth >= 640) {
+      itemWidth = 140;
+      gap = 12;
+    } else {
+      itemWidth = 110;
+      gap = 8;
+    }
+
+    const totalItemWidth = itemWidth + gap;
+    el.scrollTo({ left: index * totalItemWidth, behavior: "smooth" });
     setCurrentIndex(index);
   };
 
@@ -379,7 +442,8 @@ export default function FeedbackCarousel() {
         {/* Scroll Container */}
         <ul
           ref={scrollRef}
-          className="scroll-container flex gap-4 overflow-x-auto px-1 py-4 snap-x snap-mandatory list-none m-0 cursor-grab active:cursor-grabbing"
+          className="scroll-container flex gap-2 sm:gap-3 md:gap-4 overflow-x-auto px-1 sm:px-2 py-3 sm:py-4 snap-x snap-mandatory list-none m-0 cursor-grab active:cursor-grabbing touch-pan-x"
+          style={{ touchAction: 'pan-x pinch-zoom', overscrollBehaviorX: 'contain', WebkitOverflowScrolling: 'touch' }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -404,15 +468,15 @@ export default function FeedbackCarousel() {
                 onClick={() => setSelectedImage(url)}
                 aria-label={`View client feedback screenshot ${i + 1} of ${feedbackScreenshots.length}`}
                 aria-current={i === currentIndex ? "true" : undefined}
-                className="group cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50 rounded-2xl"
+                className="group cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50 rounded-lg sm:rounded-xl md:rounded-2xl"
               >
-                <div className="relative w-50 h-90 md:w-55 md:h-100 rounded-2xl overflow-hidden border border-border bg-surface-light transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] group-focus:border-accent/60">
+                <div className="relative w-[110px] h-[195px] sm:w-[140px] sm:h-[250px] md:w-[180px] md:h-[320px] lg:w-[220px] lg:h-[400px] rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden border border-border bg-surface-light transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] group-focus:border-accent/60">
                   <Image
                     src={url}
                     alt={`Client feedback screenshot ${i + 1}`}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="220px"
+                    sizes="(max-width: 375px) 110px, (max-width: 640px) 140px, (max-width: 768px) 180px, 220px"
                     quality={60}
                     draggable={false}
                   />
@@ -422,8 +486,8 @@ export default function FeedbackCarousel() {
           ))}
         </ul>
 
-        {/* Pagination dots */}
-        <div className="flex justify-center mt-4 gap-2" role="tablist" aria-label="Feedback screenshots pagination">
+        {/* Pagination dots - hidden on mobile */}
+        <div className="hidden sm:flex justify-center mt-4 gap-2" role="tablist" aria-label="Feedback screenshots pagination">
           {feedbackScreenshots.map((_, i) => (
             <button
               key={i}
@@ -442,8 +506,8 @@ export default function FeedbackCarousel() {
 
         {/* Scroll hint on mobile */}
         <div className="flex md:hidden justify-center mt-2 gap-1">
-          <span className="text-muted text-xs">Swipe to see more</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2" aria-hidden="true">
+          <span className="text-muted text-[10px] sm:text-xs">Swipe to see more</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2" aria-hidden="true">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </div>

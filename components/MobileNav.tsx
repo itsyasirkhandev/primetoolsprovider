@@ -85,21 +85,23 @@ export default function MobileNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-surface/95 backdrop-blur-xl border-t border-border">
-      <div className="flex items-center justify-around px-2 py-1.5 pb-[calc(0.375rem+env(safe-area-inset-bottom))]">
+      <div className="flex items-center justify-around px-1 sm:px-2 py-1 pb-[calc(0.375rem+env(safe-area-inset-bottom))]">
         {navItems.map((item) => {
           const isActive = activeSection === item.id;
           return (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200"
+              className="flex flex-col items-center gap-0.5 px-2 sm:px-3 py-1 rounded-lg sm:rounded-xl transition-all duration-200 min-w-[50px] sm:min-w-[60px]"
               style={{
                 background: isActive ? "rgba(201, 168, 76, 0.1)" : "transparent",
               }}
             >
-              <NavIcon icon={item.icon} active={isActive} />
+              <div className="scale-90 sm:scale-100">
+                <NavIcon icon={item.icon} active={isActive} />
+              </div>
               <span
-                className="text-[10px] font-medium transition-colors"
+                className="text-[9px] sm:text-[10px] font-medium transition-colors"
                 style={{ color: isActive ? "var(--accent-dark)" : "var(--muted)" }}
               >
                 {item.label}
