@@ -11,7 +11,7 @@ const navItems = [
 ];
 
 function NavIcon({ icon, active }: { icon: string; active: boolean }) {
-  const color = active ? "var(--accent)" : "var(--muted)";
+  const color = active ? "var(--accent-dark)" : "var(--muted)";
   switch (icon) {
     case "home":
       return (
@@ -100,7 +100,7 @@ export default function MobileNav() {
               <NavIcon icon={item.icon} active={isActive} />
               <span
                 className="text-[10px] font-medium transition-colors"
-                style={{ color: isActive ? "var(--accent)" : "var(--muted)" }}
+                style={{ color: isActive ? "var(--accent-dark)" : "var(--muted)" }}
               >
                 {item.label}
               </span>
