@@ -54,6 +54,7 @@ export default function FeedbackCarousel() {
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
+            aria-label="Previous feedback screenshots"
             className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-surface-light border border-border items-center justify-center hover:border-accent/50 transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -64,6 +65,7 @@ export default function FeedbackCarousel() {
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
+            aria-label="Next feedback screenshots"
             className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-surface-light border border-border items-center justify-center hover:border-accent/50 transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,6 +83,7 @@ export default function FeedbackCarousel() {
             <button
               key={i}
               onClick={() => setSelectedImage(url)}
+              aria-label={`View client feedback screenshot ${i + 1}`}
               className="flex-shrink-0 snap-center group cursor-pointer"
             >
               <div className="relative w-[200px] h-[360px] md:w-[220px] md:h-[400px] rounded-2xl overflow-hidden border border-border bg-surface-light transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_0_20px_rgba(201,168,76,0.1)]">
@@ -113,6 +116,7 @@ export default function FeedbackCarousel() {
         >
           <button
             onClick={() => setSelectedImage(null)}
+            aria-label="Close image"
             className="absolute top-4 right-4 w-10 h-10 rounded-full bg-surface-light/80 flex items-center justify-center z-10"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--foreground)" strokeWidth="2" strokeLinecap="round">

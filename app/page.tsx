@@ -99,7 +99,7 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted hover:text-accent transition-colors duration-200 font-body"
+                className="text-sm text-muted hover:text-accent-text transition-colors duration-200 font-body"
               >
                 {link.label}
               </a>
@@ -128,7 +128,7 @@ export default function Home() {
           {/* Badge */}
           <div className="animate-fade-in-up opacity-0 inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-4 py-1.5 mb-8">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            <span className="text-xs text-accent font-body">Trusted by 1000+ Customers</span>
+            <span className="text-xs text-accent-text font-body">Trusted by 1000+ Customers</span>
           </div>
 
           {/* Heading */}
@@ -157,7 +157,7 @@ export default function Home() {
             </a>
             <a
               href="#products"
-              className="inline-flex items-center justify-center gap-2 border-2 border-border bg-background text-foreground px-8 py-3.5 rounded-full text-sm font-medium hover:border-accent hover:text-accent transition-all dark:bg-surface-light"
+              className="inline-flex items-center justify-center gap-2 border-2 border-border bg-background text-foreground px-8 py-3.5 rounded-full text-sm font-medium hover:border-accent hover:text-accent-text transition-all dark:bg-surface-light"
             >
               Browse Products
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -174,7 +174,7 @@ export default function Home() {
               { value: "24/7", label: "Support" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-accent font-heading">{stat.value}</div>
+                <div className="text-2xl md:text-3xl font-bold text-accent-text font-heading">{stat.value}</div>
                 <div className="text-xs text-muted mt-1 font-body">{stat.label}</div>
               </div>
             ))}
@@ -195,7 +195,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <div className="text-center mb-14">
-            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Our Collection</span>
+            <span className="text-accent-text text-xs uppercase tracking-[0.2em] font-body font-medium">Our Collection</span>
             <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
               Premium <span className="gold-shimmer">Subscriptions</span>
             </h2>
@@ -230,12 +230,12 @@ export default function Home() {
 
                 {/* Content */}
                 <div className="flex flex-col flex-1 p-4">
-                  <h3 className="font-heading font-semibold text-base leading-tight mb-3 group-hover:text-accent transition-colors line-clamp-2">
+                  <h3 className="font-heading font-semibold text-base leading-tight mb-3 group-hover:text-accent-text transition-colors line-clamp-2">
                     {product.product_name}
                   </h3>
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-accent font-bold text-xl font-heading">{product.price}</span>
+                      <span className="text-accent-text font-bold text-xl font-heading">{product.price}</span>
                       {product.original_price && (
                         <span className="text-muted text-sm line-through ml-2">{product.original_price}</span>
                       )}
@@ -247,7 +247,7 @@ export default function Home() {
                       <div className="flex flex-wrap gap-2">
                         {product.variations.map((v, vi) => (
                           <span key={vi} className="text-xs bg-surface border border-border text-foreground px-2.5 py-1.5 rounded-lg font-body font-medium">
-                            {v.option}: <span className="text-accent font-semibold">{"price" in v ? v.price : v.price_range}</span>
+                            {v.option}: <span className="text-accent-text font-semibold">{"price" in v ? v.price : v.price_range}</span>
                           </span>
                         ))}
                       </div>
@@ -278,7 +278,7 @@ export default function Home() {
       <section id="feedback" className="relative py-20 md:py-28 bg-surface-light/50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Testimonials</span>
+            <span className="text-accent-text text-xs uppercase tracking-[0.2em] font-body font-medium">Testimonials</span>
             <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
               What Our <span className="gold-shimmer">Clients Say</span>
             </h2>
@@ -295,7 +295,7 @@ export default function Home() {
       <section id="payment" className="relative py-20 md:py-28">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Easy Checkout</span>
+            <span className="text-accent-text text-xs uppercase tracking-[0.2em] font-body font-medium">Easy Checkout</span>
             <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
               Payment <span className="gold-shimmer">Methods</span>
             </h2>
@@ -311,7 +311,7 @@ export default function Home() {
                 className="group bg-surface-light border border-border rounded-2xl p-5 text-center hover:border-accent/30 transition-all duration-300 hover:bg-surface-lighter"
               >
                 <div className="mb-3 flex justify-center text-accent">{paymentIcons[method.iconType]}</div>
-                <span className="text-sm font-body text-foreground group-hover:text-accent transition-colors">
+                <span className="text-sm font-body text-foreground group-hover:text-accent-text transition-colors">
                   {method.name}
                 </span>
               </div>
@@ -324,7 +324,7 @@ export default function Home() {
       <section id="contact" className="relative py-20 md:py-28 bg-surface-light/50">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="text-accent text-xs uppercase tracking-[0.2em] font-body font-medium">Get In Touch</span>
+            <span className="text-accent-text text-xs uppercase tracking-[0.2em] font-body font-medium">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
               Contact <span className="gold-shimmer">Us</span>
             </h2>
@@ -348,7 +348,7 @@ export default function Home() {
               </div>
               <h3 className="font-heading font-semibold text-lg mb-1">WhatsApp</h3>
               <p className="text-muted font-body text-sm">+92 343 8782614</p>
-              <span className="mt-4 text-xs text-accent font-body">Tap to chat &rarr;</span>
+              <span className="mt-4 text-xs text-accent-text font-body">Tap to chat &rarr;</span>
             </a>
 
             {/* Email Card */}
@@ -364,7 +364,7 @@ export default function Home() {
               </div>
               <h3 className="font-heading font-semibold text-lg mb-1">Email</h3>
               <p className="text-muted font-body text-sm">providerprimetools@gmail.com</p>
-              <span className="mt-4 text-xs text-accent font-body">Send email &rarr;</span>
+              <span className="mt-4 text-xs text-accent-text font-body">Send email &rarr;</span>
             </a>
           </div>
         </div>
@@ -379,10 +379,10 @@ export default function Home() {
               <p className="text-muted text-xs font-body mt-1">Premium digital subscriptions at unbeatable prices.</p>
             </div>
             <div className="flex items-center gap-6">
-              <a href="#products" className="text-xs text-muted hover:text-accent transition-colors font-body">Products</a>
-              <a href="#feedback" className="text-xs text-muted hover:text-accent transition-colors font-body">Reviews</a>
-              <a href="#payment" className="text-xs text-muted hover:text-accent transition-colors font-body">Payment</a>
-              <a href="#contact" className="text-xs text-muted hover:text-accent transition-colors font-body">Contact</a>
+              <a href="#products" className="text-xs text-muted hover:text-accent-text transition-colors font-body">Products</a>
+              <a href="#feedback" className="text-xs text-muted hover:text-accent-text transition-colors font-body">Reviews</a>
+              <a href="#payment" className="text-xs text-muted hover:text-accent-text transition-colors font-body">Payment</a>
+              <a href="#contact" className="text-xs text-muted hover:text-accent-text transition-colors font-body">Contact</a>
             </div>
           </div>
           <div className="mt-6 pt-6 border-t border-border text-center">
