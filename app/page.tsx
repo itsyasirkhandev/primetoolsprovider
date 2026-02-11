@@ -237,7 +237,7 @@ export default function Home() {
                       <div className="flex flex-wrap gap-2">
                         {product.variations.map((v, vi) => (
                           <span key={vi} className="text-xs bg-surface border border-border text-foreground px-2.5 py-1.5 rounded-lg font-body font-medium">
-                            {v.option}: <span className="text-accent font-semibold">{v.price}</span>
+                            {v.option}: <span className="text-accent font-semibold">{"price" in v ? v.price : v.price_range}</span>
                           </span>
                         ))}
                       </div>
