@@ -423,10 +423,10 @@ export default function FeedbackCarousel() {
               aria-label={`Go to screenshot ${i + 1} of ${feedbackScreenshots.length}`}
               aria-selected={i === currentIndex}
               role="tab"
-              className={`w-2 h-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 ${
+              className={`min-w-[44px] min-h-[44px] rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 flex items-center justify-center ${
                 i === currentIndex
                   ? "bg-accent w-6"
-                  : "bg-border hover:bg-accent/50"
+                  : "bg-border hover:bg-accent/50 w-2"
               }`}
             />
           ))}
